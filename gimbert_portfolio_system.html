@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Development Portfolio – Gimbert Ludovice</title>
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: #f7f8fa;
+      font-family: 'Georgia', serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 24px 80px;
+    }
+
+    /* ════════════════════════════════
+       NAV / HEADER
+    ════════════════════════════════ */
+    nav {
+      width: 100%;
+      background: #ffffff;
+      border-bottom: 2px solid #e8f5e9;
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    nav a {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #9ba3af;
+      text-decoration: none;
+      padding: 16px 22px;
+      transition: color 0.2s, border-bottom 0.2s;
+      border-bottom: 3px solid transparent;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: green;
+      border-bottom: 3px solid green;
+    }
+
+    /* ════════════════════════════════
+       SECTIONS WRAPPER
+    ════════════════════════════════ */
+    .section {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding-top: 52px;
+    }
+
+    .section.active {
+      display: flex;
+    }
+
+    /* ── Page label ── */
+    .page-label {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #9ba3af;
+      margin-bottom: 40px;
+    }
+
+    /* ════════════════════════════════
+       CARD
+    ════════════════════════════════ */
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+      padding: 52px 56px 56px;
+      max-width: 680px;
+      width: 100%;
+      margin-bottom: 32px;
+    }
+
+    /* ════════════════════════════════
+       ACTIVITY 1 STYLES
+       h1 – blue, centered
+       p  – 18px, gray
+    ════════════════════════════════ */
+    #act1-heading {
+      color: blue;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 36px;
+    }
+
+    .rule-blue {
+      width: 48px;
+      height: 3px;
+      background: blue;
+      border-radius: 2px;
+      margin: 0 auto 36px;
+      opacity: 0.25;
+    }
+
+    .act1-para {
+      font-size: 18px;
+      color: gray;
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    .act1-para:last-child { margin-bottom: 0; }
+
+    /* ════════════════════════════════
+       ACTIVITY 2 + FULLSTACK STYLES
+       #id  – green, centered
+       .info – beige, 16px, padding
+    ════════════════════════════════ */
+    #title,
+    #profile-heading,
+    #frontend-heading,
+    #backend-heading,
+    #database-heading,
+    #devops-heading {
+      color: green;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    #frontend-heading,
+    #backend-heading,
+    #database-heading,
+    #devops-heading {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+
+    #subtitle {
+      color: green;
+      text-align: center;
+      font-size: 1rem;
+      font-style: italic;
+      margin-bottom: 36px;
+    }
+
+    .rule {
+      width: 48px;
+      height: 3px;
+      background: green;
+      border-radius: 2px;
+      margin: 0 auto 36px;
+      opacity: 0.3;
+    }
+
+    .info {
+      background-color: beige;
+      font-size: 16px;
+      padding: 20px 24px;
+      color: #444;
+      line-height: 1.75;
+      border-radius: 6px;
+      margin-bottom: 16px;
+    }
+
+    .info:last-child { margin-bottom: 0; }
+
+    /* ════════════════════════════════
+       PROFILE CARD EXTRAS
+    ════════════════════════════════ */
+    .avatar {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: #e8f5e9;
+      border: 3px solid #a5d6a7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 2rem;
+      color: green;
+      font-weight: 700;
+      font-family: 'Courier New', monospace;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .meta-item {
+      background-color: beige;
+      font-size: 16px;
+      padding: 20px 24px;
+      color: #444;
+      line-height: 1.6;
+      border-radius: 6px;
+    }
+
+    .meta-label {
+      font-family: 'Courier New', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #9ba3af;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .meta-value {
+      font-weight: 700;
+      color: green;
+      font-size: 15px;
+    }
+
+    /* ════════════════════════════════
+       TECH BADGES
+    ════════════════════════════════ */
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .badge {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      background: #e8f5e9;
+      color: green;
+      border: 1px solid #a5d6a7;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-weight: 600;
+    }
+
+    /* ════════════════════════════════
+       FOOTER
+    ════════════════════════════════ */
+    .footer {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      color: #c0c7d0;
+      letter-spacing: 0.1em;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 520px) {
+      .card { padding: 36px 20px 40px; }
+      .meta-grid { grid-template-columns: 1fr; }
+      nav a { padding: 14px 12px; font-size: 10px; }
+      #title, #act1-heading { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAVIGATION ══ -->
+  <nav>
+    <a href="#" class="active" onclick="showSection('profile', this)">Profile</a>
+    <a href="#" onclick="showSection('act1', this)">Activity 1</a>
+    <a href="#" onclick="showSection('act2', this)">Activity 2</a>
+    <a href="#" onclick="showSection('fullstack', this)">Full Stack</a>
+  </nav>
+
+  <!-- ══════════════════════════════════════
+       SECTION 0 – PROFILE
+  ══════════════════════════════════════ -->
+  <div id="section-profile" class="section active">
+    <p class="page-label">Student Portfolio — 2026</p>
+
+    <div class="card">
+      <div class="avatar">GL</div>
+      <h1 id="title">Gimbert Ludovice</h1>
+      <p id="subtitle">BSIT – Mobile &amp; Website Development</p>
+      <div class="rule"></div>
+
+      <div class="meta-grid">
+        <div class="meta-item">
+          <span class="meta-label">Full Name</span>
+          <span class="meta-value">Gimbert Ludovice</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Program</span>
+          <span class="meta-value">BSIT</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Specialization</span>
+          <span class="meta-value">Mobile &amp; Website Development</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Professor</span>
+          <span class="meta-value">Rhea Lei Talavera</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Academic Year</span>
+          <span class="meta-value">2026</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Total Activities</span>
+          <span class="meta-value">2 Activities + Full Stack</span>
+        </div>
+      </div>
+
+      <p class="info">
+        This system compiles all CSS activities and full stack development content submitted
+        under <strong>Prof. Rhea Lei Talavera</strong> for the <strong>BSIT – Mobile and
+        Website Development</strong> program. Use the navigation above to explore each section.
+      </p>
+
+      <p class="info">
+        <strong>Activity 1</strong> covers basic CSS styles (blue heading, gray paragraphs).
+        <strong>Activity 2</strong> demonstrates class and ID selectors (green heading, beige
+        paragraphs). The <strong>Full Stack</strong> section applies Activity 2 styles to real
+        full stack development content covering Front End, Back End, Database, and DevOps.
+      </p>
+    </div>
+
+    <p class="footer">© 2026 · Gimbert Ludovice · BSIT Mobile &amp; Website Development · Prof. Rhea Lei Talavera</p>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 1 – ACTIVITY 1
+  ══════════════════════════════════════ -->
+  <div id="section-act1" class="section">
+    <p class="page-label">Activity 1 – Basic CSS Styles</p>
+
+    <div class="card">
+      <h1 id="act1-heading">Understanding CSS Fundamentals</h1>
+      <div class="rule-blue"></div>
+
+      <p class="act1-para">
+        CSS, or Cascading Style Sheets, controls the visual presentation of HTML elements.
+        With just a few properties — <code>color</code>, <code>text-align</code>,
+        <code>font-size</code> — you can dramatically transform how a webpage looks and feels.
+      </p>
+
+      <p class="act1-para">
+        Selectors let you target specific elements, while properties define <em>what</em> to
+        change. This heading is blue and centered using <code>color: blue</code> and
+        <code>text-align: center</code>. These paragraphs use <code>font-size: 18px</code>
+        and <code>color: gray</code>, exactly as required by the activity.
+      </p>
+    </div>
+
+    <!-- CSS Reference Table -->
+    <div class="card">
+      <h2 id="frontend-heading">CSS Properties Used</h2>
+      <div class="rule"></div>
+
+      <p class="info">
+        <strong>color: blue</strong> — Sets the text color of the heading to blue using a named
+        CSS color keyword. Named colors like <code>blue</code>, <code>green</code>, <code>gray</code>,
+        and <code>red</code> are built into every browser.
+      </p>
+
+      <p class="info">
+        <strong>text-align: center</strong> — Centers the heading text horizontally within its
+        container. Other values include <code>left</code>, <code>right</code>, and <code>justify</code>.
+        <br><strong>font-size: 18px</strong> — Sets paragraph text to 18 pixels, making it comfortable
+        to read. <strong>color: gray</strong> applies a neutral tone to the paragraph text.
+      </p>
+    </div>
+
+    <p class="footer">Activity 1 – Basic CSS Styles · Gimbert Ludovice · 2026</p>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 2 – ACTIVITY 2
+  ══════════════════════════════════════ -->
+  <div id="section-act2" class="section">
+    <p class="page-label">Activity 2 – Class and ID Selectors</p>
+
+    <div class="card">
+      <h1 id="title">CSS Selectors in Action</h1>
+      <div class="rule"></div>
+
+      <p class="info">
+        An <strong>ID selector</strong> (e.g. <code>#title</code>) targets a single unique element
+        on the page. It is the most specific selector, meaning it overrides class and element rules
+        when there is a conflict. Use it for elements that appear exactly once.
+      </p>
+
+      <p class="info">
+        A <strong>class selector</strong> (e.g. <code>.info</code>) can be applied to many elements
+        at once, making it perfect for reusable styles like this beige background, 16px font size,
+        and comfortable padding applied to both paragraphs here.
+      </p>
+    </div>
+
+    <!-- Selector Reference Table -->
+    <div class="card">
+      <h2 id="backend-heading">Selector Reference</h2>
+      <div class="rule"></div>
+
+      <p class="info">
+        <strong>Selector:</strong> <code>#title</code><br>
+        <strong>Style:</strong> Green text, centered<br>
+        This ID selector targets the one unique <code>&lt;h1&gt;</code> element and applies
+        <code>color: green</code> and <code>text-align: center</code>.
+      </p>
+
+      <p class="info">
+        <strong>Selector:</strong> <code>.info</code><br>
+        <strong>Style:</strong> Beige background, font-size 16px, padding<br>
+        This class selector is applied to both paragraphs simultaneously, demonstrating how a
+        single class rule can style multiple elements at once.
+      </p>
+    </div>
+
+    <p class="footer">Activity 2 – Class &amp; ID Selectors · Gimbert Ludovice · 2026</p>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 3 – FULL STACK
+  ══════════════════════════════════════ -->
+  <div id="section-fullstack" class="section">
+    <p class="page-label">Full Stack Development — Class &amp; ID Selectors</p>
+
+    <!-- Hero -->
+    <div class="card">
+      <h1 id="profile-heading">Full Stack Development</h1>
+      <div class="rule"></div>
+      <p class="info">
+        Full stack development covers both the <strong>client-facing front end</strong> and the
+        <strong>server-side back end</strong> of a web application — plus the databases and
+        infrastructure that tie them together. A full stack developer can build and ship a complete
+        product independently.
+      </p>
+      <p class="info">
+        This section applies the same CSS rules from Activity 2: <code>#id</code> selectors for
+        green centered headings, and <code>.info</code> class for reusable beige blocks with 16px
+        text and padding — submitted by <strong>Gimbert Ludovice</strong> under
+        <strong>Prof. Rhea Lei Talavera</strong>.
+      </p>
+    </div>
+
+    <!-- Front End -->
+    <div class="card">
+      <h2 id="frontend-heading">Front End</h2>
+      <div class="rule"></div>
+      <p class="info">
+        The front end is everything a user sees and interacts with in the browser. Built with
+        <strong>HTML</strong> for structure, <strong>CSS</strong> for styling, and
+        <strong>JavaScript</strong> for interactivity. Modern frameworks like React, Vue, and
+        Angular make building complex, dynamic UIs faster and more maintainable.
+        <div class="badge-row">
+          <span class="badge">HTML5</span>
+          <span class="badge">CSS3</span>
+          <span class="badge">JavaScript</span>
+          <span class="badge">React</span>
+          <span class="badge">Vue</span>
+        </div>
+      </p>
+      <p class="info">
+        Responsive design ensures pages look great on any screen — critical for the
+        <strong>Mobile &amp; Website Development</strong> specialization. Flexbox, CSS Grid,
+        and media queries let developers adapt layouts for mobile, tablet, and desktop.
+      </p>
+    </div>
+
+    <!-- Back End -->
+    <div class="card">
+      <h2 id="backend-heading">Back End</h2>
+      <div class="rule"></div>
+      <p class="info">
+        The back end runs on a server and handles business logic, authentication, and database
+        communication. Common languages include <strong>Node.js</strong>, <strong>Python</strong>,
+        <strong>PHP</strong>, and <strong>Java</strong>. Frameworks like Express, Django, and
+        Laravel provide structure and speed up development.
+        <div class="badge-row">
+          <span class="badge">Node.js</span>
+          <span class="badge">Python</span>
+          <span class="badge">PHP</span>
+          <span class="badge">Express</span>
+          <span class="badge">Laravel</span>
+        </div>
+      </p>
+      <p class="info">
+        REST APIs connect the front end to the back end, sending and receiving JSON data over
+        HTTP. This lets the browser request only the data it needs — no full-page reloads —
+        resulting in faster, smoother web and mobile experiences.
+      </p>
+    </div>
+
+    <!-- Database -->
+    <div class="card">
+      <h2 id="database-heading">Database</h2>
+      <div class="rule"></div>
+      <p class="info">
+        Databases store all persistent data — user accounts, posts, orders, and more.
+        <strong>Relational databases</strong> like MySQL and PostgreSQL organize data in structured
+        tables. <strong>NoSQL databases</strong> like MongoDB store flexible, document-based
+        data suited to rapidly changing requirements.
+        <div class="badge-row">
+          <span class="badge">MySQL</span>
+          <span class="badge">PostgreSQL</span>
+          <span class="badge">MongoDB</span>
+          <span class="badge">Firebase</span>
+          <span class="badge">SQLite</span>
+        </div>
+      </p>
+      <p class="info">
+        SQL (Structured Query Language) is the standard for relational databases. Commands like
+        <code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, and <code>DELETE</code>
+        give developers precise control over reading and writing data.
+      </p>
+    </div>
+
+    <!-- DevOps -->
+    <div class="card">
+      <h2 id="devops-heading">DevOps &amp; Deployment</h2>
+      <div class="rule"></div>
+      <p class="info">
+        Once an application is built, it needs to be deployed so real users can access it.
+        Platforms like <strong>Vercel</strong>, <strong>Netlify</strong>, and
+        <strong>Railway</strong> make deploying apps straightforward. <strong>Docker</strong>
+        packages an app and all its dependencies into a portable container.
+        <div class="badge-row">
+          <span class="badge">Docker</span>
+          <span class="badge">Vercel</span>
+          <span class="badge">Netlify</span>
+          <span class="badge">GitHub Actions</span>
+          <span class="badge">CI/CD</span>
+        </div>
+      </p>
+      <p class="info">
+        Version control with <strong>Git</strong> and <strong>GitHub</strong> lets teams
+        collaborate safely. CI/CD pipelines automatically test and deploy code on every push,
+        reducing human error and accelerating releases.
+      </p>
+    </div>
+
+    <p class="footer">Full Stack Dev · Gimbert Ludovice · BSIT Mobile &amp; Website Development · Prof. Rhea Lei Talavera · 2026</p>
+  </div>
+
+  <!-- ══ SCRIPT ══ -->
+  <script>
+    function showSection(name, link) {
+      // Hide all sections
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      // Remove active from all nav links
+      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+      // Show selected section
+      document.getElementById('section-' + name).classList.add('active');
+      // Mark nav link active
+      link.classList.add('active');
+      // Prevent default anchor jump
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Prevent anchor href from changing URL hash
+    document.querySelectorAll('nav a').forEach(a => {
+      a.addEventListener('click', e => e.preventDefault());
+    });
+  </script>
+
+</body>
+</html>
